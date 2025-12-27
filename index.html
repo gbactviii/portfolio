@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GB - Full-Stack Developer Portfolio. Specialized in high-performance web applications, PHP, and JavaScript architectures.">
+    <title>Gb</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Preconnect to Font & CDN Origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.simpleicons.org">
+    
+    <!-- Optimized Font Loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CRITICAL CSS --- */
+        :root {
+            --bg-body: #050505;
+            --bg-surface: #0A0A0A;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --accent: #3B82F6;
+            --border: rgba(255, 255, 255, 0.08);
+            /* Default cursor position to center to avoid jump */
+            --cursor-x: 50vw;
+            --cursor-y: 50vh;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { 
+            scroll-behavior: smooth; 
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Spotlight Effect - Hardware Accelerated */
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle 800px at var(--cursor-x) var(--cursor-y), rgba(59, 130, 246, 0.1), transparent 80%);
+            z-index: -1; pointer-events: none;
+            will-change: background; /* Optimization hint */
+        }
+        
+        /* Noise Texture */
+        body::after {
+            content: ""; position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: -2;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed; top: 20px; width: 100%;
+            display: flex; justify-content: center; z-index: 100;
+            padding: 0 20px;
+        }
+        .nav-bar {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 10px 30px;
+            border-radius: 100px;
+            display: flex; gap: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .nav-link {
+            font-size: 0.85rem; color: var(--text-muted);
+            text-decoration: none; transition: 0.3s; position: relative;
+        }
+        .nav-link:hover { color: white; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 1px;
+            background: var(--accent); transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 0 5%; max-width: 1300px; margin: 0 auto;
+            perspective: 1000px;
+            /* Prevent layout shift */
+            contain: layout paint; 
+        }
+        .hero-container {
+            display: grid; grid-template-columns: 1.2fr 1fr;
+            gap: 4rem; align-items: center; width: 100%;
+        }
+        
+        /* Hardware Acceleration for Parallax */
+        .hero-text, .hero-image-container { 
+            will-change: transform; 
+        }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+            background: rgba(59, 130, 246, 0.1); color: #60A5FA;
+            padding: 6px 14px; border-radius: 50px;
+            border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 24px;
+        }
+        .dot {
+            width: 8px; height: 8px; background-color: #22c55e;
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        h1.hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 700; line-height: 1.1;
+            letter-spacing: -0.03em; margin-bottom: 24px; color: white;
+            min-height: 1.1em;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem; color: var(--text-muted);
+            max-width: 550px; line-height: 1.7; margin-bottom: 32px;
+        }
+
+        .hero-actions { display: flex; gap: 20px; align-items: center; }
+        .btn-primary {
+            padding: 12px 24px; background: var(--text-main); color: var(--bg-body);
+            text-decoration: none; font-weight: 600; border-radius: 6px;
+            transition: 0.2s; font-size: 0.95rem;
+        }
+        .btn-primary:hover { transform: translateY(-2px); background: white; }
+
+        .social-links { display: flex; gap: 15px; }
+        .social-icon { width: 24px; height: 24px; opacity: 0.6; transition: 0.3s; cursor: pointer; }
+        .social-icon:hover { opacity: 1; transform: translateY(-2px); }
+
+        .hero-image-container { display: flex; justify-content: center; position: relative; }
+        .hero-image {
+            width: 100%; max-width: 400px; height: auto; aspect-ratio: 4/5;
+            background: #111; border-radius: 20px;
+            object-fit: cover; border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative; z-index: 1;
+        }
+
+        /* Sections */
+        section { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        .section-header {
+            font-family: 'Space Grotesk'; font-size: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px; margin-bottom: 60px;
+        }
+        
+        /* Performance optimized reveal */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Projects */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        
+        .tilt-card {
+            position: relative;
+            background: var(--bg-surface); 
+            border-radius: 16px; padding: 1px; 
+            transform-style: preserve-3d; transform: perspective(1000px);
+            /* Removed 'transition' for mousemove to make it instant/smooth via JS */
+            cursor: pointer;
+            overflow: hidden;
+            contain: content;
+        }
+        
+        /* Glow Border (Performance Optimized) */
+        .tilt-card::before {
+            content: ""; position: absolute; inset: 0; border-radius: 16px; padding: 2px;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(255,255,255,0.3),
+                transparent 40%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 2;
+            will-change: background;
+        }
+
+        .tilt-inner {
+            background: #0F0F0F; border-radius: 15px; overflow: hidden;
+            height: 100%; display: flex; flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-image {
+            height: 220px; background: linear-gradient(135deg, #111, #1a1a1a);
+            display: flex; align-items: center; justify-content: center;
+            color: #444; font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-content h3 { font-family: 'Space Grotesk'; font-size: 1.5rem; margin-bottom: 10px; color: white; }
+        .card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .tech-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .pill {
+            font-size: 0.75rem; padding: 4px 10px;
+            background: rgba(255,255,255,0.05); border-radius: 4px;
+            color: #aaa; font-family: 'JetBrains Mono';
+        }
+
+        /* Tech Stack */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 20px; }
+        .tech-item {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            border-radius: 12px; padding: 25px 15px;
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+            transition: transform 0.2s, background-color 0.2s; cursor: default;
+        }
+        .tech-item:hover {
+            background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+        .tech-icon { width: 40px; height: 40px; opacity: 0.6; transition: opacity 0.2s; }
+        .tech-item:hover .tech-icon { opacity: 1; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); }
+        .tech-name { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-muted); opacity: 0.8; }
+
+        footer {
+            text-align: center; padding: 60px 20px;
+            border-top: 1px solid var(--border); color: var(--text-muted);
+            font-size: 0.9rem; margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-text { text-align: center; }
+            .hero-actions { justify-content: center; }
+            .hero-image { width: 100%; max-width: 350px; }
+            h1.hero-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-bar">
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#skills" class="nav-link">Stack</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-container reveal">
+                <!-- Left: Text -->
+                <div class="hero-text" id="heroText">
+                    <div class="status-badge">
+                        <span class="dot"></span>
+                        Available for Work
+                    </div>
+                    
+                    <!-- Decoded Text Target -->
+                    <h1 class="hero-title" data-value="Hi, I'm GB.">Hi, I'm GB.</h1>
+                    
+                    <p class="hero-desc">
+                     full-stack developer with expertise in HTML, CSS, JavaScript, PHP, and MySQL. I develop scalable, user-centric web applications by combining clean, responsive front-end interfaces with efficient and secure back-end architectures.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#work" class="btn-primary">View Projects</a>
+                        <div class="social-links">
+                            <a href="https://github.com/gbactviii" title="GitHub" aria-label="GitHub"><img src="https://cdn.simpleicons.org/github/white" class="social-icon" alt="GitHub" width="24" height="24" loading="lazy"></a>
+                      
+                            <a href="mailto:gbactviii@gmail.com" title="Email" aria-label="Email"><img src="https://cdn.simpleicons.org/gmail/white" class="social-icon" alt="Email" width="24" height="24" loading="lazy"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Image (High Priority) -->
+                <div class="hero-image-container" id="heroImg">
+                    <!-- Using fetchpriority="high" for LCP -->
+                    <img src="images/gb.png" 
+                         alt="GB Profile" 
+                         class="hero-image"
+                         width="400" height="500"
+                         fetchpriority="high">
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="work">
+            <div class="section-header reveal">Selected Works</div>
+            <div class="projects-grid">
+                
+                <article class="tilt-card reveal">
+                    <div class="tilt-inner">
+                         <div class="card-image">
+    <img src="images/themarket.png" 
+         alt="themarket"
+         loading="lazy"
+         style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+                        <div class="card-content">
+                            <h3>The Market</h3>
+                            <p>The application functions as a multi-vendor marketplace featuring real-time inventory syncing, a dynamic cart system, and a secure admin dashboard for managing products, orders, and sales analytics. It emphasizes a "gallery-like" shopping experience where the interface recedes to let the products take center stage.</p>
+                            <div class="tech-row">
+                                <span class="pill">PHP</span>
+                                <span class="pill">MySQL</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tilt-card reveal">
+                    <div class="tilt-inner">
+                    <div class="card-image">
+    <img src="images/baneza.png" 
+         alt="baneza"
+         loading="lazy"
+         style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+
+                        <div class="card-content">
+                            <h3>BANEZA</h3>
+                            <p>A secure, high-integrity online examination system built for educational institutions. It features a browser lockdown mechanism to prevent cheating, real-time timer synchronization, and role-based access control for students and administrators. The system handles secure login authentication, automated quiz grading, and generates instant results, providing a streamlined, paperless testing environment.</p>
+                            <div class="tech-row">
+                                <span class="pill">PHP</span>
+                                <span class="pill">MySQL</span>
+                                <span class="pill">Security</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                
+
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section id="skills">
+            <div class="section-header reveal">Tech Arsenal</div>
+            
+            <div class="tech-grid">
+                <!-- Images below fold set to lazy load -->
+                <div class="tech-item reveal" style="transition-delay: 0.1s;">
+                    <img class="tech-icon" src="https://cdn.simpleicons.org/html5/white" alt="HTML5" width="40" height="40" loading="lazy">
+                    <span class="tech-name">HTML5</span>
+                </div>
+                <div class="tech-item reveal" style="transition-delay: 0.2s;">
+                    <img class="tech-icon" src="https://simpleicons.org/icons/css.svg" alt="CSS3" width="40" height="40" loading="lazy">
+                    <span class="tech-name">CSS3</span>
+                </div>
+                <div class="tech-item reveal" style="transition-delay: 0.3s;">
+                    <img class="tech-icon" src="https://cdn.simpleicons.org/javascript/white" alt="JavaScript" width="40" height="40" loading="lazy">
+                    <span class="tech-name">JavaScript</span>
+                </div>
+                <div class="tech-item reveal" style="transition-delay: 0.4s;">
+                    <img class="tech-icon" src="https://cdn.simpleicons.org/php/white" alt="PHP" width="40" height="40" loading="lazy">
+                    <span class="tech-name">PHP</span>
+                </div>
+                <div class="tech-item reveal" style="transition-delay: 0.5s;">
+                    <img class="tech-icon" src="https://cdn.simpleicons.org/mysql/white" alt="MySQL" width="40" height="40" loading="lazy">
+                    <span class="tech-name">MySQL</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 GB. All Rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        // --- PERFORMANCE OPTIMIZED JS ---
+
+        // 1. HACKER TEXT DECODE (Low CPU impact)
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const heroTitle = document.querySelector(".hero-title");
+
+        // Only run when element is visible
+        const observerText = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startDecode();
+                    observerText.disconnect(); // Run once
+                }
+            });
+        });
+        observerText.observe(heroTitle);
+
+        function startDecode() {
+            let iterations = 0;
+            const originalText = heroTitle.dataset.value;
+            const interval = setInterval(() => {
+                heroTitle.innerText = originalText.split("")
+                    .map((letter, index) => {
+                        if(index < iterations) return originalText[index];
+                        return letters[Math.floor(Math.random() * 26)];
+                    })
+                    .join("");
+                if(iterations >= originalText.length) clearInterval(interval);
+                iterations += 1/3;
+            }, 30);
+        }
+
+        // 2. OPTIMIZED MOUSE EVENTS (rAF Throttling)
+        let mouseX = 0;
+        let mouseY = 0;
+        let isTicking = false;
+        const heroText = document.getElementById('heroText');
+        const heroImg = document.getElementById('heroImg');
+        const cards = document.querySelectorAll('.tilt-card');
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    updateUI();
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        });
+
+        function updateUI() {
+            // A. Spotlight & Glow
+            document.documentElement.style.setProperty('--cursor-x', mouseX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', mouseY + 'px');
+            
+            // B. Card Borders
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = mouseX - rect.left;
+                const y = mouseY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                
+                // C. Tilt (Only if hovering)
+                if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                     const rotateX = ((y - rect.height/2) / (rect.height/2)) * -8;
+                     const rotateY = ((x - rect.width/2) / (rect.width/2)) * 8;
+                     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                } else {
+                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+                }
+            });
+
+            // D. Parallax (Subtle)
+            const pX = (window.innerWidth - mouseX * 2) / 100;
+            const pY = (window.innerHeight - mouseY * 2) / 100;
+            if (heroText) heroText.style.transform = `translate(${pX}px, ${pY}px)`;
+            if (heroImg) heroImg.style.transform = `translate(${-pX}px, ${-pY}px)`;
+        }
+
+        // 3. SCROLL REVEAL (Optimized)
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    scrollObserver.unobserve(entry.target); // Stop watching once revealed
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => scrollObserver.observe(el));
+    </script>
+</body>
+</html>
