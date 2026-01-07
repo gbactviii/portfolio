@@ -5,24 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="GB - Full-Stack Developer Portfolio. Specialized in high-performance web applications.">
 
-<meta name="author" content="GB">
-<meta name="keywords" content="Full-Stack Developer, Web Developer, PHP Developer, JavaScript, MySQL, Portfolio">
+    <meta name="author" content="GB">
+    <meta name="keywords" content="Full-Stack Developer, Web Developer, PHP Developer, JavaScript, MySQL, Portfolio">
 
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GB | Full-Stack Developer">
+    <meta property="og:description" content="Full-Stack Developer crafting high-performance, secure, and scalable web applications.">
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="GB | Full-Stack Developer">
-<meta property="og:description" content="Full-Stack Developer crafting high-performance, secure, and scalable web applications.">
-
-
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GB | Full-Stack Developer">
-<meta name="twitter:description" content="High-performance web architectures with sleek, responsive UI.">
-
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GB | Full-Stack Developer">
+    <meta name="twitter:description" content="High-performance web architectures with sleek, responsive UI.">
 
     <title>GB | Full-Stack Developer</title>
-<link rel="icon" type="image/png" href="/images/logo.svg">
-
+    <link rel="icon" type="image/png" href="/images/logo.svg">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +52,6 @@
             overflow-x: hidden;
             width: 100%;
         }
-
 
         body::before {
             content: '';
@@ -161,10 +155,10 @@
         }
         .icon-btn img {
             width: 20px; height: 20px; opacity: 0.5;
-            transition: 0.3s; filter: grayscale(100%) brightness(200%); /* Uniform Look */
+            transition: 0.3s; filter: grayscale(100%) brightness(200%); 
         }
         .icon-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .icon-btn:hover img { opacity: 1; filter: none; } /* Reveal Brand Color */
+        .icon-btn:hover img { opacity: 1; filter: none; } 
 
         .hero-image-wrapper {
             position: relative; display: flex; justify-content: center;
@@ -176,6 +170,63 @@
             object-fit: cover; border: 1px solid var(--border);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             transition: transform 0.1s;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 0.8fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* --- WORKS SECTION --- */
@@ -286,22 +337,24 @@
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
+            header {
+                top: 10px; 
+            }
 
-
-               header {
-        top: 10px; 
-    }
-
-    #hero {
-        padding-top: 140px; 
-        min-height: calc(100vh + 60px);
-    }
+            #hero {
+                padding-top: 140px; 
+                min-height: calc(100vh + 60px);
+            }
 
             .hero-container { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
             .hero-actions { justify-content: center; }
             h1.hero-title { font-size: 3rem; }
             .section-header { font-size: 2rem; }
             .card-img-container { height: 200px; }
+
+            /* About Section Mobile */
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .stats-grid { grid-template-columns: 1fr; }
 
             body::before { display: none; } 
         }
@@ -312,6 +365,7 @@
     <header>
         <nav class="nav-bar">
             <a href="#hero" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
             <a href="#work" class="nav-link">Projects</a>
             <a href="#stack" class="nav-link">Stack</a>
         </nav>
@@ -345,6 +399,44 @@
 
                 <div class="hero-image-wrapper">
                     <img src="images/gb.png" alt="GB Profile" class="hero-image" fetchpriority="high">
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-header reveal">About Me</div>
+            
+            <div class="about-grid reveal">
+           <div class="about-text">
+    <p>
+        I am a <span class="highlight">3rd-Year BS Information Systems Student</span> in the Philippines, passionate about building digital solutions that balance performance and design.
+    </p>
+    <p>
+        My journey began with a curiosity about how information systems and web applications work, which has grown into hands-on experience with <span class="highlight">PHP & MySQL</span> and other technologies. I enjoy learning how to create efficient, user-friendly systems that solve real-world problems.
+    </p>
+    <p>
+        Outside of class, I spend my time experimenting with new coding techniques, exploring UI/UX trends, and contributing to the developer community to strengthen my skills.
+    </p>
+</div>
+
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">3rd</span>
+                        <span class="stat-label">Year Level</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Client Satisfaction</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support & Maint.</span>
+                    </div>
                 </div>
             </div>
         </section>
